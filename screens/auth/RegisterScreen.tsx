@@ -6,10 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import AuthService from "../../services/AuthService";
 import { LoginFormData } from "../../types";
-import Button from "../../components/auth/AuthButton";
+import AuthButton from "../../components/auth/AuthButton";
 import BottomLabel from "../../components/auth/BottomLabel";
 import AuthInput from "../../components/auth/AuthInput";
-import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLabel";
+import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLink";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -124,9 +124,9 @@ export default function LoginScreen() {
         name="password"
       />
 
-      <ForgotPasswordLabel />
+      {/* <ForgotPasswordLabel /> */}
 
-      <Button onPress={handleSubmit(onSubmit)} color="#000" text="Register" />
+      <AuthButton onPress={handleSubmit(onSubmit)} color="#000" text="Register" />
 
       <BottomLabel
         linkText="Already have an account ?"

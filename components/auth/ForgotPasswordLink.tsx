@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, Text } from "react-native";
 
-const ForgotPasswordLabel = () => {
+const ForgotPasswordLink = () => {
   const navigation = useNavigation();
 
   return (
@@ -11,7 +11,7 @@ const ForgotPasswordLabel = () => {
   );
 };
 
-export default ForgotPasswordLabel;
+export default ForgotPasswordLink;
 
 const styles = StyleSheet.create({
   forgotPassword: {

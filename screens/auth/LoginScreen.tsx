@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -7,10 +7,10 @@ import { useNavigation } from "@react-navigation/native";
 import AuthService from "../../services/AuthService";
 import { LoginFormData } from "../../types";
 import useUserStore from "../../store/UserStore";
-import Button from "../../components/auth/AuthButton";
+import AuthButton from "../../components/auth/AuthButton";
 import BottomLabel from "../../components/auth/BottomLabel";
 import AuthInput from "../../components/auth/AuthInput";
-import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLabel";
+import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLink";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -24,8 +24,8 @@ export default function LoginScreen() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "yogesh@bhawsar.dev",
-      password: "tamtum88",
+      email: "",
+      password: "",
     },
   });
 
@@ -33,15 +33,14 @@ export default function LoginScreen() {
     try {
       const user = await AuthService.login(data);
       console.log(user);
-
       setUser(user);
+      reset();
     } catch (error: any) {
       error.forEach((error: any) => {
         // WIP - Need to figure out how to set error for specific field
-        console.log(error.message);
+        console.log(error);
       });
     }
-    reset();
   };
 
   return (
@@ -61,7 +60,7 @@ export default function LoginScreen() {
         render={({ field: { onChange, onBlur, value } }) => (
           <AuthInput
             iconName="ios-person-outline"
-            iconColor="#2c3e50"
+            iconColor="#000"
             placeholder="Enter Your Email"
             keyboardType="email-address"
             textContentType="emailAddress"
@@ -99,7 +98,7 @@ export default function LoginScreen() {
                       ? "ios-eye-outline"
                       : "ios-eye-off-outline"
                   }
-                  color="#2c3e50"
+                  color="#000"
                 />
               </Pressable>
             }
@@ -110,7 +109,7 @@ export default function LoginScreen() {
 
       <ForgotPasswordLabel />
 
-      <Button onPress={handleSubmit(onSubmit)} color="#000" text="Log In" />
+      <AuthButton onPress={handleSubmit(onSubmit)} color="#000" text="Log In" />
 
       <BottomLabel
         linkText="Don't have an account?"

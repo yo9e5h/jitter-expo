@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, Text } from "react-native";
 
-export default function Button({
+export default function AuthButton({
   onPress,
   text,
   style,

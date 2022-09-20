@@ -76,6 +76,7 @@ const AuthInput = ({
         secureTextEntry={secureTextEntry}
         spellCheck={false}
         textContentType={textContentType}
+        placeholderTextColor={"#2c3e50"}
         style={[
           {
             flex: 1,
