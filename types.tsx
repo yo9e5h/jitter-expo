@@ -18,11 +18,22 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  HomeScreen: undefined;
+  JitNavigator: undefined;
   Login: undefined;
   ForgotPassword: undefined;
   Register: undefined;
   Modal: undefined;
   NotFound: undefined;
+  ProfileScreen: { username: string };
+  SingleJitScreen: {
+    jitId: number;
+    jitBody: string;
+    jitName: string;
+    jitUsername: string;
+    jitUpdatedAt: string;
+    jitCreatedAt: string;
+  };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -69,4 +80,23 @@ export type UserState = {
   user: User | null;
   setUser: (user: User) => void;
   clearUser: () => Promise<void>;
+};
+
+export type Jit = {
+  id: number;
+  user_id: number;
+  username: string;
+  name: string;
+  body: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type JitState = {
+  jits: Jit[];
+  jitLoading: boolean;
+  jitError: string | null;
+  setJits: () => Promise<void>;
+  clearJits: () => Promise<void>;
 };

@@ -14,7 +14,10 @@ import {
 import LoginScreen from "../screens/auth/LoginScreen";
 import HomeScreen from "../screens/home/HomeScreen";
 import RegisterScreen from "../screens/auth/RegisterScreen";
-import ForgotPasswordScreeen from "../screens/auth/ForgotPasswordScreen";
+import ForgotPasswordScreen from "../screens/auth/ForgotPasswordScreen";
+import SingleJitScreen from "../screens/home/SingleJitScreen";
+import ProfileScreen from "../screens/home/ProfileScreen";
+import AccountScreen from "../screens/auth/AccountScreen";
 
 export default function Navigation() {
   return (
@@ -30,6 +33,11 @@ function RootNavigator() {
   const navigation = useNavigation();
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
       <Stack.Group>
         <Stack.Screen
           name="Login"
@@ -47,17 +55,27 @@ function RootNavigator() {
         />
         <Stack.Screen
           name="ForgotPassword"
-          component={ForgotPasswordScreeen}
+          component={ForgotPasswordScreen}
           options={{
             headerShown: true,
+            presentation: "modal",
+            headerTitle: "Forgot Password",
+            headerRight: () => (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                style={({ pressed }) => ({
+                  opacity: pressed ? 0.5 : 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                })}
+              >
+                <Ionicons name="ios-close-outline" size={32} />
+              </Pressable>
+            ),
           }}
         />
       </Stack.Group>
-      <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
+
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -98,39 +116,31 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   return (
-    <BottomTab.Navigator initialRouteName="Home">
+    <BottomTab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarActiveTintColor: "#000",
+      }}
+    >
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={JitNavigator}
         options={({ navigation }: RootTabScreenProps<"Home">) => ({
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "ios-home" : "ios-home-outline"}
-              color={color}
+              color={focused ? "#000" : color}
             />
-          ),
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate("Modal")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}
-            >
-              <Ionicons
-                name="information-circle-outline"
-                size={25}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
           ),
         })}
       />
       <BottomTab.Screen
         name="Account"
-        component={LoginScreen}
+        component={AccountScreen}
         options={{
-          title: "Account",
+          title: "Profile",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "person" : "person-outline"}
@@ -140,6 +150,44 @@ function BottomTabNavigator() {
         }}
       />
     </BottomTab.Navigator>
+  );
+}
+
+const JitStack = createNativeStackNavigator<RootStackParamList>();
+
+function JitNavigator() {
+  return (
+    <JitStack.Navigator
+      screenOptions={{
+        headerShown: true,
+      }}
+    >
+      <JitStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{
+          headerTitle: "Home",
+          headerTransparent: true,
+          headerBlurEffect: "light",
+          headerStyle: {
+            backgroundColor: "#fff",
+          },
+          headerShadowVisible: false,
+        }}
+      />
+      <JitStack.Screen
+        name="SingleJitScreen"
+        component={SingleJitScreen}
+        options={{
+          headerTitle: "Jit",
+        }}
+      />
+      <JitStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={({ route }: any) => ({ title: route.params.username })}
+      />
+    </JitStack.Navigator>
   );
 }
 
