@@ -9,7 +9,6 @@ import { LoginFormData } from "../../types";
 import AuthButton from "../../components/auth/AuthButton";
 import BottomLabel from "../../components/auth/BottomLabel";
 import AuthInput from "../../components/auth/AuthInput";
-import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLink";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -22,6 +21,7 @@ export default function LoginScreen() {
     formState: { errors },
   } = useForm({
     defaultValues: {
+      name: "",
       username: "",
       email: "",
       password: "",
@@ -58,15 +58,15 @@ export default function LoginScreen() {
           <AuthInput
             iconName="ios-person-outline"
             iconColor="#2c3e50"
-            placeholder="Enter Your Username"
+            placeholder="Enter Your Name"
             keyboardType="default"
-            textContentType="username"
+            textContentType="name"
             value={value}
             onBlur={onBlur}
             onChangeText={onChange}
           />
         )}
-        name="username"
+        name="name"
       />
 
       <Controller
@@ -76,7 +76,7 @@ export default function LoginScreen() {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <AuthInput
-            iconName="ios-at-outline"
+            iconName="ios-mail-outline"
             iconColor="#2c3e50"
             placeholder="Enter Your Email"
             keyboardType="email-address"
@@ -126,7 +126,11 @@ export default function LoginScreen() {
 
       {/* <ForgotPasswordLabel /> */}
 
-      <AuthButton onPress={handleSubmit(onSubmit)} color="#000" text="Register" />
+      <AuthButton
+        onPress={handleSubmit(onSubmit)}
+        color="#000"
+        text="Register"
+      />
 
       <BottomLabel
         linkText="Already have an account ?"

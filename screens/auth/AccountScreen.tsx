@@ -5,7 +5,7 @@ import { Text, View } from "react-native";
 export default function AccountScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>AccountScreen </Text>
+      <Text style={styles.title}>AccountScreen</Text>
     </View>
   );
 }
@@ -18,10 +18,5 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
 });

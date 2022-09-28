@@ -11,23 +11,24 @@ class AuthService {
         email,
         password,
       });
-      await SecureStore.setItemAsync("token", response.data.token.token);
-      console.log(response.data.token.token);
+      await SecureStore.setItemAsync("token", response.data.token);
+      console.log(response.data.token);
 
       return response.data;
     } catch (err: any) {
-      const error = err.response.data.errors;
+      const error = err.response.data.message;
       throw error;
     }
   }
 
   async register(data: RegisterFormData) {
-    const username = data.username;
+    const name = data.name;
     const email = data.email;
     const password = data.password;
+
     try {
       const response = await api.post("/register", {
-        username,
+        name,
         email,
         password,
       });

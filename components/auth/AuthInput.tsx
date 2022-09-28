@@ -1,23 +1,14 @@
-import { Ionicons } from "@expo/vector-icons";
 import {
   KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleProp,
-  StyleSheet,
   TextInput,
   TextInputFocusEventData,
   TextInputProps,
   ViewStyle,
   View,
 } from "react-native";
-
-function Icon(props: {
-  name: React.ComponentProps<typeof Ionicons>["name"];
-  color: string;
-  style?: any;
-}) {
-  return <Ionicons size={20} {...props} />;
-}
+import Icon from "../Icon";
 
 const AuthInput = ({
   iconName,
@@ -65,6 +56,7 @@ const AuthInput = ({
         style={{
           marginRight: 10,
         }}
+        size={20}
       />
       <TextInput
         onBlur={onBlur}

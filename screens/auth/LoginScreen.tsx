@@ -10,7 +10,8 @@ import useUserStore from "../../store/UserStore";
 import AuthButton from "../../components/auth/AuthButton";
 import BottomLabel from "../../components/auth/BottomLabel";
 import AuthInput from "../../components/auth/AuthInput";
-import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLink";
+import ForgotPasswordLabel from "../../components/auth/ForgotPasswordLabel";
+import Icon from "../../components/Icon";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -33,13 +34,14 @@ export default function LoginScreen() {
     try {
       const user = await AuthService.login(data);
       console.log(user);
-      setUser(user);
-      reset();
+      // setUser(user);
+      // reset();
     } catch (error: any) {
-      error.forEach((error: any) => {
-        // WIP - Need to figure out how to set error for specific field
-        console.log(error);
-      });
+      // error.forEach((error: any) => {
+      //   // WIP - Need to figure out how to set error for specific field
+      //   console.log(error);
+      // });
+      console.log(error);
     }
   };
 
@@ -61,8 +63,8 @@ export default function LoginScreen() {
           <AuthInput
             iconName="ios-person-outline"
             iconColor="#000"
-            placeholder="Enter Your Email"
-            keyboardType="email-address"
+            placeholder="Enter your Email"
+            keyboardType="default"
             textContentType="emailAddress"
             value={value}
             onBlur={onBlur}
@@ -99,6 +101,7 @@ export default function LoginScreen() {
                       : "ios-eye-off-outline"
                   }
                   color="#000"
+                  size={20}
                 />
               </Pressable>
             }
@@ -118,12 +121,4 @@ export default function LoginScreen() {
       />
     </SafeAreaView>
   );
-}
-
-function Icon(props: {
-  name: React.ComponentProps<typeof Ionicons>["name"];
-  color: string;
-  style?: any;
-}) {
-  return <Ionicons size={20} {...props} />;
 }
