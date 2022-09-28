@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-const SingleJitScreen = ({ route }: any) => {
+const ProfileScreen = ({ route }: any) => {
   const params = route.params;
   return (
     <View>
@@ -9,4 +9,4 @@ const SingleJitScreen = ({ route }: any) => {
   );
 };
 
-export default SingleJitScreen;
+export default ProfileScreen;
