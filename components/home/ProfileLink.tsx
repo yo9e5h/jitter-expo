@@ -4,9 +4,15 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 const ProfileLink = ({
   username,
   name,
+  nameLabelFontSize,
+  usernameLabelFontSize,
+  size,
 }: {
   username: string;
   name: string;
+  nameLabelFontSize: number;
+  usernameLabelFontSize: number;
+  size: number;
 }) => {
   const navigation = useNavigation();
 
@@ -23,17 +29,21 @@ const ProfileLink = ({
           uri: "https://reactnative.dev/img/tiny_logo.png",
         }}
         style={{
-          width: 32,
-          height: 32,
+          width: size,
+          height: size,
           borderRadius: 24,
-          margin: 8,
+          marginRight: 8,
         }}
       />
-      <View>
+      <View
+        style={{
+          flexDirection: "column",
+        }}
+      >
         <Text
           style={{
             fontWeight: "500",
-            fontSize: 16,
+            fontSize: nameLabelFontSize,
           }}
         >
           {name}
@@ -41,6 +51,7 @@ const ProfileLink = ({
         <Text
           style={{
             color: "#666",
+            fontSize: usernameLabelFontSize,
           }}
         >
           @{username}
@@ -54,11 +65,10 @@ export default ProfileLink;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     flexDirection: "row",
-    flex: 1,
-    padding: 8,
-    backgroundColor: "#fff",
     alignItems: "center",
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 8,
   },
 });

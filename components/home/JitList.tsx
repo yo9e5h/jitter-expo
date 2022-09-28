@@ -1,12 +1,14 @@
 import { FlashList } from "@shopify/flash-list";
 import React, { useEffect } from "react";
-import { Image, SafeAreaView, Text, View } from "react-native";
+import { Button, SafeAreaView, Text, View } from "react-native";
 import useJitStore from "../../store/JitStore";
+import SendJitButton from "../buttons/SendJitButton";
 import JitListItem from "./JitListItem";
 
 const JitList = () => {
   const jits = useJitStore((state) => state.jits);
   const setJits = useJitStore((state) => state.setJits);
+
   const loading = useJitStore((state) => state.jitLoading);
   const error = useJitStore((state) => state.jitError);
 
@@ -20,7 +22,7 @@ const JitList = () => {
 
   useEffect(() => {
     setJits();
-    console.log(jits);
+    console.log("jits", jits);
   }, []);
 
   return (
@@ -44,6 +46,7 @@ const JitList = () => {
         keyExtractor={(item) => item.id.toString()}
         estimatedItemSize={100}
       />
+      <SendJitButton />
     </SafeAreaView>
   );
 };
