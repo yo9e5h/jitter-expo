@@ -1,6 +1,6 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
-import { Jit, JitState } from "../types";
+import { JitState } from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../services/api";
 
@@ -15,16 +15,17 @@ const useJitStore = create<JitState>()(
         api
           .get("/jits", {
             headers: {
-              Authorization: `Bearer MQ.cBWg0D_ISc2jkeJcLFmNxKawtslEoMC89zRGp8qfUKioK1un1HzNM8zIuBF1`,
+              Authorization: `Bearer 1|nzA4iIAWo0UkWzOhOmc6JlZ5Wg7cK5EBg2EcVaXm`,
             },
           })
           .then((response) => {
             set({
-              jits: response.data,
+              jits: response.data.data,
               jitLoading: false,
             });
           });
       },
+
       clearJits: async () => {
         set({ jits: [] });
       },
