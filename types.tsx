@@ -26,6 +26,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   ProfileScreen: { username: string };
+  SendJitScreen: undefined;
   SingleJitScreen: {
     jitId: number;
     jitBody: string;
@@ -33,6 +34,8 @@ export type RootStackParamList = {
     jitUsername: string;
     jitUpdatedAt: string;
     jitCreatedAt: string;
+    jitLikeCount: number;
+    jitCommentCount: number;
   };
 };
 
@@ -56,24 +59,18 @@ export type LoginFormData = {
 };
 
 export type RegisterFormData = {
-  username: string;
+  name: string;
   email: string;
   password: string;
 };
 
 export type User = {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    created_at: string;
-    updated_at: string;
-  };
-  token: {
-    type: string;
-    token: string;
-    expires_at: string;
-  };
+  name: string;
+  username: string;
+  email: string;
+  created_at: string;
+  updated_at: string;
+  id: number;
 };
 
 export type UserState = {
@@ -82,21 +79,27 @@ export type UserState = {
   clearUser: () => Promise<void>;
 };
 
-export type Jit = {
+export type JitModel = {
   id: number;
   user_id: number;
-  username: string;
-  name: string;
   body: string;
-  description: string;
   created_at: string;
   updated_at: string;
+  likes_count: number;
+  comments_count: number;
+  user: User;
 };
 
 export type JitState = {
-  jits: Jit[];
+  jits: JitModel[];
   jitLoading: boolean;
   jitError: string | null;
   setJits: () => Promise<void>;
   clearJits: () => Promise<void>;
+};
+
+export type LikeState = {
+  isLiked: boolean;
+  likeJit: (jitId: number) => Promise<void>;
+  unLikeJit: (jitId: number) => Promise<void>;
 };
