@@ -1,18 +1,26 @@
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Button, Pressable, Text } from "react-native";
+import { Button, Pressable, StyleSheet, Text } from "react-native";
 import HomeScreen from "../../screens/home/HomeScreen";
 import ProfileScreen from "../../screens/home/ProfileScreen";
 import SendJitScreen from "../../screens/home/SendJitScreen";
 import SingleJitScreen from "../../screens/home/SingleJitScreen";
 import useJitStore from "../../store/JitStore";
+import useSendJitStore from "../../store/SendJitStore";
 import { RootStackParamList } from "../../types";
 
 const JitStack = createNativeStackNavigator<RootStackParamList>();
 
 function JitNavigator() {
   const clear = useJitStore((state) => state.clearJits);
+  const sendJit = useSendJitStore((state) => state.sendJit);
+  const draftJit = useSendJitStore((state) => state.draftJit);
   const navigation = useNavigation();
+
+  const handleSendJit = () => {
+    sendJit(draftJit);
+    navigation.goBack();
+  };
 
   return (
     <JitStack.Navigator
@@ -46,6 +54,7 @@ function JitNavigator() {
         component={SendJitScreen}
         options={{
           headerTitle: "",
+          headerTintColor: "#fff",
           presentation: "fullScreenModal",
           headerShadowVisible: false,
           headerLeft: () => (
@@ -69,26 +78,11 @@ function JitNavigator() {
           ),
           headerRight: () => (
             <Pressable
-              onPress={() => console.log("pressed")}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-                flexDirection: "row",
-                alignItems: "center",
-                backgroundColor: "#000",
-                borderRadius: 16,
-              })}
+              disabled={!draftJit}
+              onPress={handleSendJit}
+              style={draftJit ? styles.sendButton : styles.disabledSendButton}
             >
-              <Text
-                style={{
-                  color: "#fff",
-                  fontSize: 14,
-                  fontWeight: "bold",
-                  padding: 8,
-                  paddingHorizontal: 16,
-                }}
-              >
-                Send
-              </Text>
+              <Text style={styles.sendButtonText}>Send</Text>
             </Pressable>
           ),
         }}
@@ -98,3 +92,26 @@ function JitNavigator() {
 }
 
 export default JitNavigator;
+
+const styles = StyleSheet.create({
+  sendButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#000",
+    borderRadius: 16,
+  },
+  disabledSendButton: {
+    opacity: 0.15,
+    backgroundColor: "#000",
+    borderRadius: 16,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  sendButtonText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+    padding: 8,
+    paddingHorizontal: 16,
+  },
+});
