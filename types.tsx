@@ -103,3 +103,10 @@ export type LikeState = {
   likeJit: (jitId: number) => Promise<void>;
   unLikeJit: (jitId: number) => Promise<void>;
 };
+
+export type SendJitState = {
+  draftJit: string;
+  sendJitLoading: boolean;
+  sendJitError: null;
+  sendJit: (body: string) => void;
+};
