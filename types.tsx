@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { UserInterfaceIdiom } from "expo-constants";
 
 declare global {
   namespace ReactNavigation {
@@ -27,6 +28,12 @@ export type RootStackParamList = {
   NotFound: undefined;
   ProfileScreen: { username: string };
   SendJitScreen: undefined;
+  SendCommentModal: {
+    jitId: number;
+    jitUsername: string;
+    jitBody: string;
+    jitName: string;
+  };
   SingleJitScreen: {
     jitId: number;
     jitBody: string;
@@ -90,18 +97,39 @@ export type JitModel = {
   user: User;
 };
 
+export type CommentModel = {
+  id: number;
+  user_id: number;
+  jit_id: number;
+  body: string;
+  created_at: string;
+  updated_at: string;
+  likes_count: number;
+  user: User;
+};
+
 export type JitState = {
   jits: JitModel[];
   jitLoading: boolean;
   jitError: string | null;
-  setJits: () => Promise<void>;
+  fetchJits: () => Promise<void>;
   clearJits: () => Promise<void>;
 };
 
+export type CommentState = {
+  comments: CommentModel[];
+  commentsLoading: boolean;
+  commentsError: string | null;
+  fetchComments: (id: number) => Promise<void>;
+  clearComments: () => Promise<void>;
+};
+
 export type LikeState = {
+  likes: number[];
   isLiked: boolean;
   likeJit: (jitId: number) => Promise<void>;
   unLikeJit: (jitId: number) => Promise<void>;
+  clearLikes: () => Promise<void>;
 };
 
 export type SendJitState = {
@@ -109,4 +137,11 @@ export type SendJitState = {
   sendJitLoading: boolean;
   sendJitError: null;
   sendJit: (body: string) => void;
+};
+
+export type SendCommentState = {
+  draftComment: string;
+  sendCommentLoading: boolean;
+  sendCommentError: null;
+  sendComment: (id: number, body: string) => void;
 };

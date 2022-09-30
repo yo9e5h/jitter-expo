@@ -2,7 +2,6 @@ import create from "zustand";
 import { persist } from "zustand/middleware";
 import { JitState } from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import api from "../services/api";
 import JitService from "../services/JitService";
 
 const useJitStore = create<JitState>()(
@@ -12,9 +11,13 @@ const useJitStore = create<JitState>()(
       jitLoading: true,
       jitError: null,
 
-      setJits: async () => {
+      fetchJits: async () => {
         JitService.getJits().then((jits) => {
-          set({ jits });
+          set((state) => ({
+            ...state,
+            jits: jits.data,
+            jitLoading: false,
+          }));
         });
       },
 

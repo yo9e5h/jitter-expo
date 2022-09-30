@@ -1,8 +1,24 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import useSendJitStore from "../../store/SendJitStore";
+import { useForm, Controller } from "react-hook-form";
 
-const SendInput = () => {
-  const draftJit = useSendJitStore((state) => state.draftJit);
+const SendInput = ({
+  placeholder,
+  value,
+  onChangeText,
+}: {
+  value: string;
+  placeholder: string;
+  onChangeText: (value: string) => void;
+}) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      value: "",
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -10,12 +26,12 @@ const SendInput = () => {
         <TextInput
           multiline
           style={styles.input}
-          placeholder="What's on your mind?"
+          placeholder={placeholder}
           placeholderTextColor="#A0AEC0"
           maxLength={280}
-          value={draftJit}
+          value={value}
           selectionColor="#1f2937"
-          onChangeText={(text) => useSendJitStore.setState({ draftJit: text })}
+          onChangeText={onChangeText}
         />
       </View>
     </View>

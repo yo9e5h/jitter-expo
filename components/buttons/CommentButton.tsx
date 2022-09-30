@@ -1,22 +1,44 @@
-import { Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Pressable, Text, View } from "react-native";
+import { JitModel } from "../../types";
 import Icon from "../Icon";
 
 const CommentButton = ({
+  id,
   count,
   iconSize,
   fontSize,
+  username,
+  name,
+  body,
 }: {
+  id: number;
   count: number;
   iconSize: number;
   fontSize: number;
+  username: string;
+  name: string;
+  body: string;
 }) => {
+  const navigation = useNavigation();
+
+  const handleNavigation = () => {
+    navigation.navigate("SendCommentModal", {
+      jitId: id,
+      jitUsername: username,
+      jitName: name,
+      jitBody: body,
+    });
+  };
+
   return (
-    <View
+    <Pressable
       style={{
         flexDirection: "row",
         alignItems: "center",
         width: 36,
       }}
+      onPress={handleNavigation}
     >
       <Icon
         name="ios-chatbubble-outline"
@@ -32,7 +54,7 @@ const CommentButton = ({
       >
         {count}
       </Text>
-    </View>
+    </Pressable>
   );
 };
 
