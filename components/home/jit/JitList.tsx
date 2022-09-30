@@ -1,27 +1,46 @@
 import { FlashList } from "@shopify/flash-list";
 import React, { useEffect } from "react";
-import { Button, SafeAreaView, Text, View } from "react-native";
-import useJitStore from "../../store/JitStore";
-import SendJitButton from "../buttons/SendJitButton";
+import { ActivityIndicator, SafeAreaView, Text, View } from "react-native";
+import useJitStore from "../../../store/JitStore";
+import SendJitButton from "../../buttons/SendJitButton";
 import JitListItem from "./JitListItem";
 
 const JitList = () => {
   const jits = useJitStore((state) => state.jits);
-  const setJits = useJitStore((state) => state.setJits);
-
+  const fetchJits = useJitStore((state) => state.fetchJits);
   const loading = useJitStore((state) => state.jitLoading);
   const error = useJitStore((state) => state.jitError);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   if (error) {
-    return <Text>Error: {error}</Text>;
+    return (
+      <Text
+        style={{
+          textAlign: "center",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: 20,
+        }}
+      >
+        Error: {error}
+      </Text>
+    );
   }
 
   useEffect(() => {
-    setJits();
     console.log("jits", jits);
   }, []);
 
@@ -39,12 +58,16 @@ const JitList = () => {
           <View
             style={{
               paddingVertical: 0.5,
-              backgroundColor: "#eee",
+              backgroundColor: "#f3f4f6",
             }}
           />
         )}
         keyExtractor={(item) => item.id.toString()}
         estimatedItemSize={100}
+        onRefresh={() => {
+          fetchJits();
+        }}
+        refreshing={loading}
       />
       <SendJitButton />
     </SafeAreaView>

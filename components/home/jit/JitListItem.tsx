@@ -1,11 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native";
-import { JitModel } from "../../types";
-import Jit from "../jit";
+import { JitModel } from "../../../types";
+import Jit from ".";
 import JitCounts from "./JitCounts";
-import ProfileLink from "./ProfileLink";
+import ProfileLink from "../profile/ProfileLink";
+import useCommentStore from "../../../store/CommentStore";
 
 const JitListItem = (jit: JitModel) => {
+  const fetchComments = useCommentStore((state) => state.fetchComments);
+
   const navigation = useNavigation();
   const {
     id,
@@ -28,22 +31,26 @@ const JitListItem = (jit: JitModel) => {
       jitUpdatedAt: updated_at,
       jitCreatedAt: created_at,
     });
+    fetchComments(id);
   };
 
   return (
     <Pressable onPress={goToSingleJit}>
       <ProfileLink
-        name={jit.user.name}
-        username={jit.user.username}
+        name={user.name}
+        username={user.username}
         size={36}
         usernameLabelFontSize={18}
         nameLabelFontSize={18}
       />
-      <Jit body={jit.body} size={18} />
+      <Jit body={body} size={18} />
       <JitCounts
-        likes_count={jit.likes_count}
-        comments_count={jit.comments_count}
-        id={jit.id}
+        name={user.name}
+        username={user.username}
+        body={body}
+        id={id}
+        likes_count={likes_count}
+        comments_count={comments_count}
         iconSize={20}
         fontSize={16}
       />

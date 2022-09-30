@@ -1,10 +1,13 @@
 import { View } from "react-native";
-import CommentButton from "../buttons/CommentButton";
-import LikeButton from "../buttons/LikeButton";
-import ShareButton from "../buttons/ShareButton";
+import CommentButton from "../../buttons/CommentButton";
+import LikeButton from "../../buttons/LikeButton";
+import ShareButton from "../../buttons/ShareButton";
 
 const JitCounts = ({
   id,
+  username,
+  name,
+  body,
   likes_count,
   comments_count,
   iconSize,
@@ -15,6 +18,9 @@ const JitCounts = ({
   comments_count: number;
   iconSize: number;
   fontSize: number;
+  username: string;
+  name: string;
+  body: string;
 }) => {
   return (
     <View
@@ -22,10 +28,14 @@ const JitCounts = ({
         flexDirection: "row",
         justifyContent: "space-around",
         marginHorizontal: 16,
-        marginBottom: 8,
+        marginBottom: 16,
       }}
     >
       <CommentButton
+        id={id}
+        name={name}
+        username={username}
+        body={body}
         count={comments_count}
         iconSize={iconSize}
         fontSize={fontSize}
