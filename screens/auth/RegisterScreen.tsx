@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import AuthService from "../../services/AuthService";
-import { LoginFormData } from "../../types";
+import { LoginFormData, RegisterFormData } from "../../types";
 import AuthButton from "../../components/auth/AuthButton";
 import BottomLabel from "../../components/auth/BottomLabel";
 import AuthInput from "../../components/auth/AuthInput";
@@ -28,9 +28,9 @@ export default function LoginScreen() {
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
+  const onSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await AuthService.login(data);
+      const response = await AuthService.register(data);
       console.log(response);
     } catch (error: any) {
       error.forEach((error: any) => {

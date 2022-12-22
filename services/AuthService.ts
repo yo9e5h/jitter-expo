@@ -16,8 +16,9 @@ class AuthService {
 
       return response.data;
     } catch (err: any) {
-      const error = err.response.data.message;
-      throw error;
+      console.log(err);
+
+      throw err;
     }
   }
 

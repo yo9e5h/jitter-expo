@@ -16,6 +16,7 @@ import Icon from "../../components/Icon";
 export default function LoginScreen() {
   const navigation = useNavigation();
   const [passwordVisibility, setPasswordVisibility] = React.useState(true);
+  const setToken = useUserStore((state) => state.setToken);
   const setUser = useUserStore((state) => state.setUser);
 
   const {
@@ -34,12 +35,13 @@ export default function LoginScreen() {
     try {
       const user = await AuthService.login(data);
       console.log(user);
-      // setUser(user);
-      // reset();
+      setUser(user);
+      setToken(user.token);
+      reset();
+      navigation.navigate("Root");
     } catch (error: any) {
       // error.forEach((error: any) => {
       //   // WIP - Need to figure out how to set error for specific field
-      //   console.log(error);
       // });
       console.log(error);
     }
@@ -52,6 +54,7 @@ export default function LoginScreen() {
         width: "100%",
         flex: 1,
         justifyContent: "center",
+        backgroundColor: "#fff",
       }}
     >
       <Controller
