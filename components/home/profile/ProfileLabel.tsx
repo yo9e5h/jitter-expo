@@ -4,11 +4,11 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 const ProfileLabel = ({ username }: { username: string }) => {
   const navigation = useNavigation();
 
-  const goToProfile = () => {
-    navigation.navigate("ProfileScreen", {
-      username: username,
-    });
-  };
+  // const goToProfile = () => {
+  //   navigation.navigate("ProfileScreen", {
+  //     username: username,
+  //   });
+  // };
 
   return (
     <View
@@ -19,17 +19,15 @@ const ProfileLabel = ({ username }: { username: string }) => {
       }}
     >
       <Text>replying to</Text>
-      <Pressable onPress={goToProfile}>
-        <Text
-          style={{
-            fontWeight: "500",
-            marginLeft: 4,
-            color: "#1A202C",
-          }}
-        >
-          @{username}
-        </Text>
-      </Pressable>
+      <Text
+        style={{
+          fontWeight: "500",
+          marginLeft: 4,
+          color: "#1A202C",
+        }}
+      >
+        @{username}
+      </Text>
     </View>
   );
 };

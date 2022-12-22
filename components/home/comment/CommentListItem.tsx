@@ -7,8 +7,7 @@ const CommentListItem = (comment: CommentModel) => {
   return (
     <View>
       <ProfileLink
-        name={comment.user.name}
-        username={comment.user.username}
+        user={comment.user}
         size={36}
         usernameLabelFontSize={18}
         nameLabelFontSize={18}

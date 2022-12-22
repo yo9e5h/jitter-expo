@@ -13,6 +13,8 @@ const CommentsList = () => {
     return (
       <View
         style={{
+          flex: 1,
+          backgroundColor: "#fff",
           justifyContent: "center",
           alignItems: "center",
           height: "100%",

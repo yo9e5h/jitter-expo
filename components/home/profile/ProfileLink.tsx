@@ -1,24 +1,31 @@
 import { useNavigation } from "@react-navigation/native";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { User } from "../../../types";
 
 const ProfileLink = ({
-  username,
-  name,
+  user,
   nameLabelFontSize,
   usernameLabelFontSize,
   size,
 }: {
-  username: string;
-  name: string;
-  nameLabelFontSize: number;
-  usernameLabelFontSize: number;
-  size: number;
+  user: User;
+  nameLabelFontSize?: number;
+  usernameLabelFontSize?: number;
+  size?: number;
 }) => {
   const navigation = useNavigation();
 
   const goToProfile = () => {
     navigation.navigate("ProfileScreen", {
-      username: username,
+      username: user.username,
+      name: user.name,
+      avatar_url: user.avatar_url,
+      desc: user.desc,
+      url: user.url,
+      email: user.email,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+      id: user.id,
     });
   };
 
@@ -26,7 +33,7 @@ const ProfileLink = ({
     <Pressable onPress={goToProfile} style={styles.container}>
       <Image
         source={{
-          uri: "https://reactnative.dev/img/tiny_logo.png",
+          uri: user.avatar_url,
         }}
         style={{
           width: size,
@@ -46,15 +53,16 @@ const ProfileLink = ({
             fontSize: nameLabelFontSize,
           }}
         >
-          {name}
+          {user.name}
         </Text>
         <Text
           style={{
             color: "#666",
+            paddingTop: 4,
             fontSize: usernameLabelFontSize,
           }}
         >
-          @{username}
+          @{user.username}
         </Text>
       </View>
     </Pressable>
