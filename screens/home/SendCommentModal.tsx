@@ -1,30 +1,39 @@
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import SendHeader from "../../components/home/header/SendHeader";
 import ProfileLabel from "../../components/home/profile/ProfileLabel";
-import ProfileLink from "../../components/home/profile/ProfileLink";
 import SendInput from "../../components/send/SendInput";
+import useCommentStore from "../../store/CommentStore";
+import useJitStore from "../../store/JitStore";
 import useSendCommentStore from "../../store/SendCommentStore";
 
 const SendCommentModal = ({ route }: any) => {
   const params = route.params;
   console.log(params);
 
+  const navigation = useNavigation();
   const draftComment = useSendCommentStore((state) => state.draftComment);
+  const sendComment = useSendCommentStore((state) => state.sendComment);
+  const fetchJits = useJitStore((state) => state.fetchJits);
+
+  const handleSendComment = () => {
+    sendComment(params.jitId, draftComment);
+    fetchJits();
+    navigation.goBack();
+  };
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: "#fff",
       }}
     >
-      {/* <ProfileLink
-        username={params.jitUsername}
-        name={params.jitName}
-        nameLabelFontSize={20}
-        usernameLabelFontSize={16}
-        size={40}
-      /> */}
+      <SendHeader
+        onPressCancel={() => navigation.goBack()}
+        disabled={!draftComment}
+        onPressSubmit={handleSendComment}
+      />
 
       <ProfileLabel username={params.jitUsername} />
 
@@ -35,7 +44,7 @@ const SendCommentModal = ({ route }: any) => {
           useSendCommentStore.setState({ draftComment: text })
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

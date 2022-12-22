@@ -26,8 +26,7 @@ const JitListItem = (jit: JitModel) => {
       jitBody: body,
       jitLikeCount: likes_count,
       jitCommentCount: comments_count,
-      jitUsername: user.username,
-      jitName: user.name,
+      user: user,
       jitUpdatedAt: updated_at,
       jitCreatedAt: created_at,
     });
@@ -37,10 +36,9 @@ const JitListItem = (jit: JitModel) => {
   return (
     <Pressable onPress={goToSingleJit}>
       <ProfileLink
-        name={user.name}
-        username={user.username}
-        size={36}
-        usernameLabelFontSize={18}
+        user={user}
+        size={40}
+        usernameLabelFontSize={16}
         nameLabelFontSize={18}
       />
       <Jit body={body} size={18} />
@@ -53,6 +51,7 @@ const JitListItem = (jit: JitModel) => {
         comments_count={comments_count}
         iconSize={20}
         fontSize={16}
+        width="50%"
       />
     </Pressable>
   );

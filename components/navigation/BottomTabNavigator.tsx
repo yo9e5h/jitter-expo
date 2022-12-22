@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AccountScreen from "../../screens/auth/AccountScreen";
+import ProfileScreen from "../../screens/home/ProfileScreen";
 import { RootTabParamList, RootTabScreenProps } from "../../types";
 import Icon from "../Icon";
 import JitNavigator from "./JitNavigator";
@@ -31,8 +32,8 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Account"
-        component={AccountScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           title: "Profile",
           tabBarIcon: ({ color, focused }) => (

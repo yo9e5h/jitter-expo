@@ -4,8 +4,6 @@ class CommentService {
   async fetchComments(id: number) {
     try {
       const response = await api.get(`/jits/show/${id}`);
-      console.log(response.data);
-
       return response.data;
     } catch (err: any) {
       throw new Error(err);

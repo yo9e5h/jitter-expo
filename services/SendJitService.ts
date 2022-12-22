@@ -6,9 +6,9 @@ class SendJitService {
       const response = await api.post("/jits", {
         body,
       });
-      console.log(response.data);
-    } catch (err) {
-      console.log(err);
+      return response.data;
+    } catch (err: any) {
+      throw new Error(err);
     }
   }
 }

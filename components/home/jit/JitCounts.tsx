@@ -12,6 +12,7 @@ const JitCounts = ({
   comments_count,
   iconSize,
   fontSize,
+  width,
 }: {
   id: number;
   likes_count: number;
@@ -21,14 +22,15 @@ const JitCounts = ({
   username: string;
   name: string;
   body: string;
+  width?: string;
 }) => {
   return (
     <View
       style={{
         flexDirection: "row",
         justifyContent: "space-around",
-        marginHorizontal: 16,
         marginBottom: 16,
+        width: width,
       }}
     >
       <CommentButton

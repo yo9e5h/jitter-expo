@@ -12,6 +12,7 @@ import { RootStackParamList } from "../../types";
 import useLikeStore from "../../store/LikeStore";
 import SendCommentModal from "../../screens/home/SendCommentModal";
 import useSendCommentStore from "../../store/SendCommentStore";
+import BackButton from "./BackButton";
 
 const JitStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -19,18 +20,6 @@ function JitNavigator() {
   const clearLikes = useLikeStore((state) => state.clearLikes);
   const clearJits = useJitStore((state) => state.clearJits);
   const clearComments = useCommentStore((state) => state.clearComments);
-  const fetchJits = useJitStore((state) => state.fetchJits);
-  const sendJit = useSendJitStore((state) => state.sendJit);
-  const draftJit = useSendJitStore((state) => state.draftJit);
-  const draftComment = useSendCommentStore((state) => state.draftComment);
-  const sendComment = useSendCommentStore((state) => state.sendComment);
-  const navigation = useNavigation();
-
-  const handleSendJit = () => {
-    sendJit(draftJit);
-    fetchJits();
-    navigation.goBack();
-  };
 
   const clear = () => {
     clearLikes();
@@ -43,6 +32,7 @@ function JitNavigator() {
       screenOptions={{
         headerShown: true,
         headerTintColor: "#000",
+        headerBackTitleVisible: false,
       }}
     >
       <JitStack.Screen
@@ -50,98 +40,37 @@ function JitNavigator() {
         component={HomeScreen}
         options={{
           headerTitle: "Home",
-          headerRight: () => <Button title="Clear" onPress={clear} />,
+          // headerRight: () => <Button title="Clear" onPress={clear} />,
         }}
       />
       <JitStack.Screen
         name="SingleJitScreen"
         component={SingleJitScreen}
-        options={{
-          headerTitle: "Jit",
-        }}
+        options={({ route }: any) => ({
+          title: `${route.params.user.name}'s Tweet`,
+        })}
       />
       <JitStack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={({ route }: any) => ({ title: route.params.username })}
+        options={({ route }: any) => ({
+          title: `${route.params.name}`,
+        })}
       />
       <JitStack.Screen
         name="SendJitScreen"
         component={SendJitScreen}
         options={{
-          headerTitle: "",
-          headerTintColor: "#fff",
           presentation: "fullScreenModal",
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-                flexDirection: "row",
-                alignItems: "center",
-              })}
-            >
-              <Text
-                style={{
-                  color: "#000",
-                  fontSize: 16,
-                }}
-              >
-                Cancel
-              </Text>
-            </Pressable>
-          ),
-          headerRight: () => (
-            <Pressable
-              disabled={!draftJit}
-              onPress={handleSendJit}
-              style={draftJit ? styles.sendButton : styles.disabledSendButton}
-            >
-              <Text style={styles.sendButtonText}>Send</Text>
-            </Pressable>
-          ),
+          headerShown: false,
         }}
       />
       <JitStack.Screen
         name="SendCommentModal"
         component={SendCommentModal}
-        options={({ route }: any) => ({
+        options={() => ({
           presentation: "fullScreenModal",
-          headerTitle: "",
-          headerShadowVisible: false,
-          headerLeft: () => (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-                flexDirection: "row",
-                alignItems: "center",
-              })}
-            >
-              <Text
-                style={{
-                  color: "#000",
-                  fontSize: 16,
-                }}
-              >
-                Cancel
-              </Text>
-            </Pressable>
-          ),
-          headerRight: () => (
-            <Pressable
-              disabled={!draftComment}
-              style={
-                draftComment ? styles.sendButton : styles.disabledSendButton
-              }
-              onPress={() => {
-                sendComment(route.params.jitId, draftComment);
-              }}
-            >
-              <Text style={styles.sendButtonText}>Send</Text>
-            </Pressable>
-          ),
+          headerShown: false,
         })}
       />
     </JitStack.Navigator>
@@ -149,26 +78,3 @@ function JitNavigator() {
 }
 
 export default JitNavigator;
-
-const styles = StyleSheet.create({
-  sendButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#000",
-    borderRadius: 16,
-  },
-  disabledSendButton: {
-    opacity: 0.15,
-    backgroundColor: "#000",
-    borderRadius: 16,
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  sendButtonText: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "bold",
-    padding: 8,
-    paddingHorizontal: 16,
-  },
-});

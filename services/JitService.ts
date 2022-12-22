@@ -3,8 +3,9 @@ import api from "./api";
 class JitService {
   async getJits() {
     try {
-      const response = await api.get(`/jits/`);
-      return response.data;
+      const { data } = await api.get(`/jits`);
+      console.log(data);
+      return data;
     } catch (err: any) {
       throw new Error(err);
     }

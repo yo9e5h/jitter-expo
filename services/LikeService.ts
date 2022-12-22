@@ -18,6 +18,15 @@ class LikeService {
       throw new Error(err);
     }
   }
+
+  async fetchLikes() {
+    try {
+      const response = await api.get(`/fetchlikes`);
+      return response;
+    } catch (err: any) {
+      throw new Error(err);
+    }
+  }
 }
 
 export default new LikeService();
