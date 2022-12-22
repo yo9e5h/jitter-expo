@@ -26,7 +26,17 @@ export type RootStackParamList = {
   Register: undefined;
   Modal: undefined;
   NotFound: undefined;
-  ProfileScreen: { username: string };
+  ProfileScreen: {
+    name: string;
+    username: string;
+    avatar_url: string;
+    desc: string;
+    url: string;
+    email: string;
+    created_at: string;
+    updated_at: string;
+    id: number;
+  };
   SendJitScreen: undefined;
   SendCommentModal: {
     jitId: number;
@@ -37,8 +47,7 @@ export type RootStackParamList = {
   SingleJitScreen: {
     jitId: number;
     jitBody: string;
-    jitName: string;
-    jitUsername: string;
+    user: User;
     jitUpdatedAt: string;
     jitCreatedAt: string;
     jitLikeCount: number;
@@ -51,7 +60,7 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type RootTabParamList = {
   Home: undefined;
-  Account: undefined;
+  Profile: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
@@ -74,6 +83,9 @@ export type RegisterFormData = {
 export type User = {
   name: string;
   username: string;
+  avatar_url: string;
+  desc: string;
+  url: string;
   email: string;
   created_at: string;
   updated_at: string;
@@ -83,6 +95,7 @@ export type User = {
 export type UserState = {
   user: User | null;
   setUser: (user: User) => void;
+  setToken: (token: string) => void;
   clearUser: () => Promise<void>;
 };
 
@@ -97,6 +110,8 @@ export type JitModel = {
   user: User;
 };
 
+export type PaginationModel = {};
+
 export type CommentModel = {
   id: number;
   user_id: number;
@@ -110,10 +125,11 @@ export type CommentModel = {
 
 export type JitState = {
   jits: JitModel[];
-  jitLoading: boolean;
-  jitError: string | null;
+  // pagination: PaginationModel;
   fetchJits: () => Promise<void>;
   clearJits: () => Promise<void>;
+  jitLoading: boolean;
+  jitError: string | null;
 };
 
 export type CommentState = {
@@ -127,6 +143,8 @@ export type CommentState = {
 export type LikeState = {
   likes: number[];
   isLiked: boolean;
+  fetchLikes: () => Promise<void>;
+  checkIfLiked: (id: number) => Promise<void>;
   likeJit: (jitId: number) => Promise<void>;
   unLikeJit: (jitId: number) => Promise<void>;
   clearLikes: () => Promise<void>;

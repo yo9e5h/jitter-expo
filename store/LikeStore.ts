@@ -10,13 +10,24 @@ const useLikeStore = create<LikeState>()(
       likes: [],
       isLiked: false,
 
+      fetchLikes: async () => {
+        try {
+          const response = await LikeService.fetchLikes();
+          set({ likes: response.data });
+        } catch {
+          console.log("error");
+        }
+      },
+
       likeJit: async (id: number) => {
-        set((state) => ({
-          likes: [...state.likes, id],
-        }));
-        LikeService.likeJit(id).then((data) => {
-          console.log(data);
-        });
+        try {
+          const response = await LikeService.likeJit(id);
+          console.log(response);
+
+          set({ isLiked: true });
+        } catch {
+          console.log("error");
+        }
       },
 
       unLikeJit: async (id: number) => {
@@ -26,6 +37,12 @@ const useLikeStore = create<LikeState>()(
         LikeService.unLikeJit(id).then((data) => {
           console.log(data);
         });
+      },
+
+      checkIfLiked: async (id: number) => {
+        set((state) => ({
+          isLiked: state.likes.includes(id),
+        }));
       },
 
       clearLikes: async () => {

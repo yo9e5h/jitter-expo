@@ -13,6 +13,10 @@ const useUserStore = create<UserState>()(
         set({ user });
       },
 
+      setToken: async (token: string) => {
+        await SecureStore.setItemAsync("token", token);
+      },
+
       clearUser: async () => {
         await SecureStore.deleteItemAsync("token");
         await AsyncStorage.removeItem("user");
