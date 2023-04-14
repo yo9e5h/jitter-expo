@@ -1,8 +1,7 @@
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable, SafeAreaView } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import AuthService from "../../services/AuthService";
 import { LoginFormData } from "../../types";
